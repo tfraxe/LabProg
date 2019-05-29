@@ -29,21 +29,35 @@ int main(int argc, char const *argv[])
 	//teste de geração de texto aleatório
 
 	unsigned int size = 10;
-	char* test_texto = new char[size];
-	try
-	{
-		gerar_texto_aleatorio2(test_texto, size, 3);
-		
-	}
+	const char* test_texto = gerar_texto_aleatorio(10, 6);
+	const char* test_padrao = gerar_texto_aleatorio(size/5, 6);
 
-	catch(int e)
-	{
-		cout << "Erro numero " << "ocorreu" << endl;
-		return -1;
-	}
+	int* saida_kmp = new int[size+1];
+	int* saida_fb = new int[size+1];
 
-	for (char* i = test_texto; i < test_texto + size; i++) cout << *i << "";
+	buscar_kmp(test_padrao, test_texto, saida_kmp);
+	buscar_forca_bruta(test_texto, test_padrao, saida_fb);
+
+	if (vetores_iguais(saida_kmp, saida_fb)) cout << "são iguais" << endl;
+
+	for(const char* t = test_texto; *t != '\0'; t++) cout << *t;
 	cout << endl;
+
+	for(const char* p = test_padrao; *p != '\0'; p++) cout << *p;
+	cout << endl;
+
+	char* padrao_piorCaso = new char[size/5];
+	char* texto_piorCaso = new char[size];
+
+	pior_caso2(padrao_piorCaso, size/5, texto_piorCaso, size);
+
+	for(const char* t = padrao_piorCaso; *t != '\0'; t++) cout << *t;
+	cout << endl;
+
+	for(const char* p = texto_piorCaso; *p != '\0'; p++) cout << *p;
+	cout << endl;
+
+
 
 	
 

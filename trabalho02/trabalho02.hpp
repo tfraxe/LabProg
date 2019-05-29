@@ -3,8 +3,8 @@
 
 #include <ctime>
 #include <random>
+#include <iostream>
 
-//LEMBRE-SE: NA GERAÇÃO DE STRINGS, LEMBRE-SE DE ALOCAR +1 NO TAMANHO PARA ADICIONAR O \0!!!
 
 // Checa se duas strings são iguais
 
@@ -21,20 +21,36 @@ bool sao_iguais(const char* string1, const char* string2)
 	else return false;
 }
 
-void gerar_texto_aleatorio(char* inicio, unsigned int size, unsigned short int l)
+//Compara se vetores de saída são iguais. Sabemos que ambos terão o mesmo tamanho total (o tamanho do texto + 1).
+bool vetores_iguais(int* v1, int* v2)
 {
-	if(l < 1 || l > 26) throw -1;
-	srand(time(NULL));
-	for (char* i = inicio; i < inicio + size; i++) *i = "abcdefghijklmnopqrstuvwxyz"[rand() % l];
-
+	int* iv2 = v2;
+	for (int* v = v1; *v != -1; v++) if (*v != *(iv2++)) return false;
+	if (*iv2 == -1) return true;
+	else return false;
 }
 
-void gerar_texto_aleatorio2(char* inicio, unsigned int size, unsigned short int l)
+const char* gerar_texto_aleatorio(unsigned int size, unsigned short int l)
 {
 	if(l < 1 || l > 26) throw -1;
+
+	char* inicio = new char[size + 1];
+	srand(time(NULL));
+	for (char* i = inicio; i < inicio + size; i++) *i = "abcdefghijklmnopqrstuvwxyz"[rand() % l];
+	inicio[size] = '\0';
+	
+	return (const char*) inicio;
+}
+
+const char* gerar_texto_aleatorio2(unsigned int size, unsigned short int l)
+{
+	if(l < 1 || l > 26) throw -1;
+	char* inicio = new char[size + 1];
 	srand(time(NULL));
 	for (char* i = inicio; i < inicio + size; i++) *i = 97 + (rand() % l);
+	inicio[size] = '\0';
 
+	return (const char*) inicio;
 }
 
 void pior_caso1(char* padrao, unsigned int size_padrao, char* texto, unsigned int size_texto)
@@ -43,6 +59,8 @@ void pior_caso1(char* padrao, unsigned int size_padrao, char* texto, unsigned in
 	for (char* p = padrao; p < padrao + (size_padrao - 1); p++) *p = 'a';
 
 	padrao[size_padrao - 1] = 'b';
+	padrao[size_padrao] = '\0';
+	texto[size_texto] = '\0';
 
 }
 
@@ -51,7 +69,8 @@ void pior_caso2(char* padrao, unsigned int size_padrao, char* texto, unsigned in
 {
 	for (char* i = texto; i < texto + size_texto; i++) *i = 'a';
 	for (char* p = padrao; p < padrao + size_padrao; p++) *p = 'a';
-
+	padrao[size_padrao] = '\0';
+	texto[size_texto] = '\0';
 
 }
 
