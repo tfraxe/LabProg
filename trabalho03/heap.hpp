@@ -4,25 +4,37 @@
 #include <vector>
 #include <iostream>
 using std::vector; using std::ostream;
+#include <string>
+using std::string;
+
+
 
 typedef struct node
 {
-	char dado;
+	string dado;
 	int peso;
 } HeapNode;
 
+inline bool operator < (const HeapNode& hn1, const HeapNode& hn2) { return hn1.peso < hn2.peso; }
+inline bool operator > (const HeapNode& hn1, const HeapNode& hn2) { return hn1.peso > hn2.peso; }
+
+inline ostream& operator << (ostream& out, const HeapNode hn)
+{
+	return out << "[" << hn.dado << "|" << hn.peso << "]";
+}
 
 class Heap
 {
 private:
 	vector<HeapNode> nodes;
 
-	unsigned int tam_heap;
+	int tam_heap;
 
-	unsigned int esq(unsigned int index) {return 2*index + 1;}
-	unsigned int dir(unsigned int index) {return 2*index + 2;}
+	int esq(int index) {return 2*index + 1;}
+	int dir(int index) {return 2*index + 2;}
+	int pai(int index) {return (index - 1)/2;}
 
-	void min_heapify(unsigned int index); // Supõe que árvores enraizadas em esq(index) e dir(index) são min-heaps e "corrige" nó no índice i caso ele não satisfaça propriedade da min-heap
+	void min_heapify(int index); // Supõe que árvores enraizadas em esq(index) e dir(index) são min-heaps e "corrige" nó no índice i caso ele não satisfaça propriedade da min-heap
 public:
 
 	Heap(vector<HeapNode>);
@@ -31,15 +43,18 @@ public:
 	{
 		for (auto n : h.nodes)
 		{
-			out << n.peso << " ";
+			out << n << " ";
 		}
 
 		return out;
 	}
 
+
+	unsigned int get_tamanho() {return tam_heap;}
+
 	HeapNode peek_minimum(); // Retorna o menor (primeiro) nó da heap, sem excluí-lo.
 	HeapNode extract_minimum(); // Retorna o menor (primeiro) nó da heap, removendo-o. 
-	void diminuir_peso(unsigned int pos, int novo_peso); // Diminui o peso do nó na posição pos da heap.
+	void diminuir_peso(int pos, HeapNode hn); // Diminui o peso do nó na posição pos da heap.
 	void inserir(HeapNode new_node); 
 
 

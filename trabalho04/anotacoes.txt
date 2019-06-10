@@ -1,0 +1,104 @@
+árvore binária de busca balanceada genérica. 
+
+Polimorfismo paramétrica em c++ (templates).
+
+Programar coisas genéricas quanto ao tipo. 
+
+Sobrecarga de função. 
+
+Em C só pode haver uma única definição pra um mesmo identificador. 
+
+#!/bin/bash
+gcc -Wall -Wextra -std=c11 -pedantic
+-o p1 exec \
+arquivo_1.c
+
+
+%RET=$?
+
+Em C++ no entanto isso é possível. Funciona sempre que a chamada não é ambígua. 
+
+Sobrecarga de operadores. 
+
+vetor operator+ (const vetor &a, const vetor &b)
+
+Polimorfismo paramétrico: coisas genéricas. 
+
+
+template <typename T>
+T soma (T *v, int n)
+
+	{
+		T soma = 0;
+		for (int i =0; i < n; ++i) soma += v[i];
+		return soma;
+	}
+
+Na hora que a funão é cjamada, o compilador cria uma especialização. 
+Template : tempo de compilação
+Classes  : tempo de execução. 
+
+c++ foi generalizado, struct pode ter método. a diferença entre struct e classe, em um struct tudo é público. 
+Atribuição != inicialização. 
+
+inicializar
+
+func() : member(value), member2(value2) {}
+
+Imprimir elemento que tem uma propriedade, dada como parâmetro. 
+
+template<typename T, bool P (T)> função que recebe tipo e retorna booleano
+
+POlimorfismo ad-hoc: singificado que quiser a uma especialização qualquer.  Versão especial para um T particular por exemplo. 
+
+Table doubling
+
+Padronizar percurso da coleção sem ser intrusivo nos elementos da coleção. 
+
+template <typename T>
+class Conj
+	{
+	
+	private:
+	
+		struct Noh {T elem; Noh* prox;};
+		Noh *primeiro;
+
+	public:
+		
+		class Iterador
+		{
+			private:
+			Noh *n ;
+
+			public:
+			
+			void operator++ () { n = n -> prox} //pode definir posfixo e prefixo
+			T operator* () { return n->elem};
+
+			bool operator!= (const Iterador &i) {return n != i.n;}
+		};
+		Conj() : primeiro(nullptr)  {}
+		void adicionar(T e)
+		{
+			Noh *n = new Noh; n->elem = e; n->prox = primeiro;
+			primeiro = n;
+		}
+	
+	};
+
+
+
+int main()
+{
+	Conj<double> C;
+	C.adicionar(1.1);
+	C.adicionar(2.2);
+	C.adicionar(3.3);
+
+	Conju<double>::Iterador fim = C.fim();
+
+	for(auto i = C.inicio(); i != fim;  ++i)
+		cout << *it << endl;
+
+}
