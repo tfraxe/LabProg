@@ -45,6 +45,22 @@ HuffTree construir_HuffTree(Heap&, tabela& );
 
 codificacao construir_codificacao(HuffTree&);
 
+void criar_compactado(codificacao&, string arquivo_origem); 
 
+/*
+	Construir função de compactação. 
+	1) Passar como argumento codificação obtida na função anterior e arquivo a ser compactado
+	2) Ler cada caractere e:
+		2.1) Para cada caractere, acessar codificação na tabela
+		2.2) Concatenar codificação ao buffer
+		2;3) Se tamanho do buffer + tamanho da codificação = 8, escrever no arquivo compactado. A escrita será feita
+		lendo cada bit da string e adicionando a um char. O char então será escrito no arquivo compactado.
+		2.4) Se o tamanho do buffer + tamanho da codificação > 8, concatenar parte da codificação cuja soma com buffer dá 8. Escrever no 
+		arquivo como da maneira anterior. Escrever parte restante no buffer. Continuar iteração.
+		2.5) Se o tamanho for menor, concatenar no buffer e continuar iteração. 
+	3) É necessário adicionar um cabeçalho com a árvore de huffman. 
+
+
+*/
 
 #endif

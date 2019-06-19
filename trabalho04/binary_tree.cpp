@@ -1,20 +1,37 @@
+/*
+
+	TO-DO
+
+
+	1) Sucessor
+	2) Predecessor
+	3) Remoção
+	4) Busca
+	5) Implementar dicionário e iterador. 
+
+
+
+*/
+
+
 #include <iostream>
 using std::cin; using std::cout; using std::endl;
 
 
 template <typename T, typename U>
 
-struct binary_node
+struct BinaryNode
 {
 	
 	T chave;
 	U dado;
-	binary_node* pai;
-	binary_node* esquerdo;
-	binary_node* direito;
+	BinaryNode* pai;
+	BinaryNode* esquerdo;
+	BinaryNode* direito;
 
-	bool operator < (binary_node outro)  {return this->chave < outro.chave;}
-	bool operator > (binary_node outro)  {return this->chave > outro.chave; }
+	bool operator < (BinaryNode outro)  {return this->chave < outro.chave;}
+	bool operator > (BinaryNode outro)  {return this->chave > outro.chave; }
+	
 	
 	/*
 	std::ostream& operator << (std::ostream& out)
@@ -22,16 +39,19 @@ struct binary_node
 		return out << "[ " << this->dado << ", " << this->chave << "] ";	
 	}
 	*/
+	
 
+	/*
 	void print()
 	{
 		cout << "[ " << this->dado << ", " << this->chave << "] "; 
 	}
+	*/
 
 
-	binary_node() = default;
+	BinaryNode() = default;
 
-	void incluir(binary_node& novo)
+	void incluir(BinaryNode& novo)
 	{
 
 		if (this->esquerdo == nullptr || this->direito == nullptr)
@@ -51,7 +71,7 @@ struct binary_node
 	{
 		
 		if (this->esquerdo != nullptr) {(this->esquerdo)->traversal();}
-		this->print();
+		cout << *this << endl;
 		if (this->direito != nullptr) (this->direito)->traversal();
 	}
 
@@ -59,17 +79,25 @@ struct binary_node
 };
 
 
+template <typename T, typename U>
+std::ostream& operator << (std::ostream& out, const BinaryNode<T, U>& bn)
+{
+	return out << "[ " << bn.dado << ", " << bn.chave << "] ";	
+}
+
+
+
 
 int main(int argc, char const *argv[])
 {
 	
 	cout << "ai" << endl;
-	binary_node<int, int> no = {100, 57, nullptr, nullptr, nullptr};
+	BinaryNode<int, int> no = {100, 57, nullptr, nullptr, nullptr};
 
-	binary_node<int, int> no2 = {50, 57, nullptr, nullptr, nullptr}; 
+	BinaryNode<int, int> no2 = {50, 57, nullptr, nullptr, nullptr}; 
 
 
-	binary_node<int, int> no3 = {150, 57, nullptr, nullptr, nullptr}; 
+	BinaryNode<int, int> no3 = {150, 57, nullptr, nullptr, nullptr}; 
 
 	no.incluir(no2); 
 
