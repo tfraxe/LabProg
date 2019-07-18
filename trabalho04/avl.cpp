@@ -48,6 +48,19 @@ int inserir_noh(Noh* raiz, Noh* novo) //insere novo nó na árvore AVL retornand
 		if (diff_alturas > 1) {}
 		else return nova_altura; 
 	} 
+
+	else
+	{
+		if ((novo->chave) < (raiz->chave))
+		{
+
+		}
+
+		else
+		{
+			throw "Chave já inserida!";
+		}
+	}
 }
 
 
